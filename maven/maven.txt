@@ -1,0 +1,115 @@
+﻿设置maven工程的jdk版本：
+  1.打开maven/conf/settings.xml文件
+  2.找到profiles标签
+  3.加入以下配置:
+      <profile>
+          <id>jdk-1.8</id>
+
+          <activation>
+          	 <activeByDefault>true</activeByDefault>
+          	 <jdk>1.8</jdk>
+          </activation>
+
+          <properties>
+          	 <maven.compiler.source>1.8</maven.compiler.source>
+          	 <maven.compiler.target>1.8</maven.compiler.target>
+          	 <maven.compiler.compilerVersion>1.8</maven.compiler.compilerVersion>
+          </properties>
+      </profile>
+
+当创建jsp时显示缺少运行环境
+    加入servlet-api的依赖：
+      <dependencies>
+        <dependency>
+          <groupId>javax.servlet</groupId>
+          <artifactId>servlet-api</artifactId>
+          <version>2.5</version>
+          <scope>provided</scope>
+        </dependency>
+      </dependencies>
+
+排除依赖：
+    <dependency>
+        <groupId>javax.servlet</groupId>
+        <artifactId>servlet-api</artifactId>
+        <version>2.5</version>
+        <scope>provided</scope>
+
+        <exclusions>
+          <exclusion>
+            <goupId>grouoId-name</groupId>
+            <artifactId>artifactId-name</artifactId>
+          </exclusion>
+        </exclusions>
+    </dependency>
+
+继承：test范围的依赖，必然分散在各个模块中，造成版本不一致
+   要求：统一管理各个模块中的依赖版本
+   方法：将依赖版本统一提取到父工程中，在子工程中声明依赖时不指定版本
+   步骤: 1.创建一个Maven工程作为父工程，注意:打包的方式pom
+          <project>
+              <modelVersion>4.0.0</modelVersion>
+              <groupId>com.tnti.maven</groupId>
+              <artifactId>parent</artifactId>
+              <version>0.0.1-SNAPSHOT</version>
+              <packaging>pom</packaging>
+          </project> 
+         2.在子工程中声明对父工程的引用
+            <parent>
+              <groupId>com.tnti.maven</groupId>
+              <artifactId>parent</artifactId>
+              <version>0.0.1-SNAPSHOT</version>
+              <!--以当前工程的pom.xml文件为基准的父工程的pom.xml文件的相对路径-->
+              <relativePath>../Parent/pom.xml</relativePath>
+            </parent>
+         3.将子工程中雨父工程坐标中重复的内容删除
+              删除带有黄线的内容，groupId  artifactId   
+         4.在父工程中统一依赖
+              <dependencyManagement>
+                <dependencies>
+                  <dependency>
+                    <groupId>junit</groupId>
+                    <artifactId>junit</artifactId>
+                    <version>3.8.1</version>
+                    <scope>test</scope>
+                  </dependency>
+                </dependencies>
+              </dependencyManagement>
+         5.在子工程中删除依赖的版本号
+              删除带有黄线的内容
+
+聚合：
+  1.作用：一键安装各个模块工程
+  2.配置方式：在一个“总的聚合工程”中配置各个参与的聚合工程
+  在父工程中配置：(也可以单独创建一个工程，都可以，通常在父工程中)
+      <modules>
+        <!-- 指定各个值工程的相对路径-->
+        <module>../Hello</module>
+        <module>../HelloFriend</module>
+        <module>../MakeFriends</module>
+      <modules>
+  3.使用方式：在聚合工程的pom.xml上右键-run as-maven install
+
+  
+  <!-- 配置当前过程构建过程中特殊设置 -->
+  <build>
+    <!-- 最终的名字 -->
+    <finalName>servletDemo</finalName>
+    <pluginManagement>
+      <!-- 配置构建过程中需要使用的插件 -->
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <configuration>
+            <defaultLibBundleDir>lib</defaultLibBundleDir>
+            <source>1.8</source>
+            <target>1.8</target>
+            <encoding>UTF-8</encoding>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
+
+查询依赖关系的网址：http://www.mvnrepository.com/
