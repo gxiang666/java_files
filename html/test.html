@@ -78,11 +78,84 @@
 		enctype:对表单进行编码，不上传文件是不需要指定该属性，multipart/form-data:在上传文件是指定该值即可
 	 -->
 	<form action="www.baidu.com" method="post">	
-		账号<input type="text" name="account" value="请输入账号"/><br/>		<!-- 文本框 -->
-		密码<input type="password" name="pwd "/><br/>		<!-- 密码框 -->
-		   <input type="submit" value="在按钮上显示的内容" /><br/>	<!-- 提交按钮 -->
+
+		<!-- 文本框 -->
+		账号<input type="text" name="account" value="请输入账号"/><br/>		
+		<!-- 密码框 -->
+		密码<input type="password" name="pwd "/><br/>	
+
+		<!-- 提交按钮 -->
+		<input type="submit" value="在按钮上显示的内容" /><br/><hr/>
+
+		<!-- 提交按钮 -->
+		<input type="submit" value="提交"/><br/>	<hr/>	
+
+		<!-- 重置按钮 -->
+		<input type="reset" name="点我重置"/><br/><hr/>		
+
+		<!-- 单选按钮 -->
+		季节：		
+		<input type="radio" name="season" value="spring"/>春天
+		<input type="radio" name="season" value="summer" checked="checked" />夏天   <!-- 将当前单选按钮设置为默认被选中 -->
+		<input type="radio" name="season" value="autumn"/>秋天
+		<input type="radio" name="season" value="winter"/>冬天<br/><hr/>	
+		
+		<!-- 多选框 -->
+		爱好：		
+		<input type="checkbox" name="hobby" value="reading"/>读书
+		<input type="checkbox" name="hobby" value="swimming" checked="checked"/>游泳
+		<input type="checkbox" name="hobby" value="shopping"/>购物
+		<input type="checkbox" name="hobby" value="sleeping" checked="checked"/>睡觉<br/><hr/>	
+
+		<!-- 普通按钮 -->
+		<input type="button" value="普通按钮"/><br/>	<hr/>
+
+		<!-- 文件上传框 -->
+		<input type="file" name="uploadFile"/><br/><hr/>	
+
+		<!-- 表单隐藏 -->
+		<input type="hidden" name="hiddenFiled" value="hiddenValue"/><br/><hr/>	
+
+		<!-- 多行文本框 -->
+		<textarea name="textareaName" rows="8" cols="40">请输入文本</textarea><br/><hr/>	
 		   
+		<!-- 下拉表单 -->
+		<select name="fruit">
+			<option value="apple">苹果</option>
+			<option value="banana">香蕉</option>
+			<option value="orange" selected="selected">橘子</option>
+			<option value="pear">梨</option>	
+		</select><br/><hr/>
 	</form>
 	
+	<!-- 超链接 -->
+	<a href="https://www.baidu.com">点击跳转百度</a><br/><hr/>
+
+	<!--插入图片-->
+	<img src="http://pic1.win4000.com/wallpaper/2018-01-26/5a6ae9778c0bd.png"  width="200px" height="30px"/><hr/>
+
+	<!-- 列表 -->
+		<!-- 无序列表 -->
+	<ul>
+		<li>
+			Coffee
+		</li>
+		<li>
+			Milk
+		</li>
+	</ul>
+		<!-- 有序列表 -->
+	<ol>
+		<li>
+			Coffee
+		</li>
+		<li>
+			Milk
+		</li>
+	</ol>
+
+
+	
+
 </body>
 </html>
