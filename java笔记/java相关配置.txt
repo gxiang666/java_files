@@ -1,0 +1,16 @@
+﻿java相关配置
+
+	1.jdk配置;
+		JAVA_HOME: C:\Program Files\Java\jdk-10.0.1
+		path: %JAVA_HOME%\bin
+	
+	2.maven配置：
+		M2_HOME: D:\JAVA\java_tools\apache-maven-3.5.4
+		path: D:\JAVA\java_tools\apache-maven-3.5.4\bin
+
+	3.tomcat配置：
+		CLASSPATH: %JAVA_HOME%\lib
+		path: D:\JAVA\java_tools\apache-tomcat-9.0.10\bin
+
+	4.MySql配置：
+		path: C:\Program Files\MySQL\MySQL Server 8.0\bin

@@ -1,0 +1,5 @@
+1.Ctrl+左键 无法查看源代码：
+	下载相应的源代码，进行导入
+	servlet-api源码下载地址：http://archive.apache.org/dist/tomcat/tomcat-7/v7.0.28/src/
+2.servlet文件存放位置：
+	D:\JAVA\java_work\My_WorkSpaces\workspace01\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\fileUpload
