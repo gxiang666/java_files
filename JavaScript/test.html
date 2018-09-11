@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>熊高祥</title>
+
+	<script type="text/javascript">
+		window.onload = function () {
+			var btn = document.getElementsByTagName("button")[0];
+			btn.onclick = function(){
+				alert(this.firstChild.nodeValue);
+			}
+		}
+
+		//定义对象
+		var person = {
+		    firstName: "John",
+		    lastName : "Doe",
+		    id : 5566,
+		    fullName : function() 
+			{
+		       return this.firstName + " " + this.lastName;
+		    }
+		};
+
+		//定义数组
+		var person = [];
+		person[0] = "John";
+		person[1] = "Doe";
+		person[2] = 46;
+		var x = person.length;         // person.length 返回 3
+		var y = person[0];             // person[0] 返回 "John"
+
+		var person = [];
+		person["firstName"] = "John";
+		person["lastName"] = "Doe";
+		person["age"] = 46;
+		var x = person.length;         // person.length 返回 0
+		var y = person[0];             // person[0] 返回 undefined	
+
+		//改变css
+		document.getElementById("p2").style.color="blue";
+		document.getElementById("p2").style.fontFamily="Arial";
+		document.getElementById("p2").style.fontSize="larger";	
+
+		//改变文本内容
+		document.getElementById("p1").innerHTML="新文本!";
+
+		//改变标签属性
+		document.getElementById("image").src="landscape.jpg";
+	</script>
+
+</head>
+<body>
+
+	<!--
+		JavaScript输出：
+			1.window.alert();      	 弹出警告框
+				<script>
+					window.alert(5 + 6);
+				</script>
+			2.document.write();     将内容写到HTML文档中
+				<script>
+					document.getElementById("demo").innerHTML = "段落已修改。";
+				</script>
+			3.innerHTML    	        写到到HTML元素
+				<script>
+					document.write(Date());
+				</script>
+			4.console.log();		写入到浏览器的控制台
+				<script>
+					a = 5;
+					b = 6;
+					c = a + b;
+					console.log(c);
+				</script>
+
+		类型转换：	x=123;
+			String(x);      将变量转换为字符串
+			x.toString();  	将变量转换为字符串
+
+		DOM:
+			节点(node)：元素节点，属性节点，文本节点
+			节点的属性：nodeName, nodeType, nodeValue
+			获取元素节点：
+				根据id属性值获取获取：document.getElementById(元素的id属性)，返回当前元素节点的引用
+				根据标签名获取：
+					document.getElementsByTagName(标签名)，返回的是标签名对应的元素节点的数值
+				根据name属性获取一组元素节点：
+					document.getElementByName(元素的name属性)
+	-->
+	
+	<button>Click Me!</button>
+</body>
+</html>
