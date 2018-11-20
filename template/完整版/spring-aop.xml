@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- AOPService spring bean -->
+	<bean id="AOPService" class="com.yuw.aop.AOPService"
+		scope="prototype">
+	</bean>
+
+	<!-- AOPOperator spring bean -->
+	<bean id="AOPOperator" class="com.yuw.aop.AOPOperator"
+		scope="prototype">
+	</bean>
+
+	<!-- AOPOperator前置通知 spring bean -->
+	<bean id="AOPOperatorMethodBeforeAdvice"
+		class="com.yuw.aop.AOPOperatorMethodBeforeAdvice" scope="prototype">
+	</bean>
+
+	<!-- 使用动态代理的模式执行aop操作 -->
+	<!-- 代理类的springbean的定义 -->
+	<bean id="AOPServiceProxy"
+		class="org.springframework.aop.framework.ProxyFactoryBean">
+		<!-- target:被代理的bean -->
+		<property name="target" ref="AOPService" />
+		<!-- interceptorNames:代理类执行的行为方法接口的实现类，也就是aop的切入点 -->
+		<property name="interceptorNames">
+			<list>
+				<!-- aop：切入点的接口实现类的列表 -->
+				<value>AOPOperatorMethodBeforeAdvice</value>
+			</list>
+		</property>
+	</bean>
+	
+	<!-- <aop:config>
+		<aop:pointcut expression="execution(* cn.sxt.service.UserServiceImpl.add())" id="pointcut"/>
+		<aop:advisor advice-ref="log" pointcut-ref="pointcut"/>
+	</aop:config> -->
+</beans>
