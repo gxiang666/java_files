@@ -1,0 +1,10 @@
+扫描使用注解的组件：	
+	<context:component-scan　base-package = "org.example"/>
+
+@Resource:控制反转，即生成bean
+springMVC是方法级别的相应
+servelt是类级别的响应
+
+
+@Component:通用注解；@Name:通用注解；@Repository:持久化层组件注解
+@Service:业务层组件注解；@Controller:控制层组件注解
