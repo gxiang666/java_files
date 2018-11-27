@@ -1,0 +1,1 @@
+集合中线程安全的类：Vector     HashTable	   ConcurrentHashMap     CopyOnWriteArrayList

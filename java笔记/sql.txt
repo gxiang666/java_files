@@ -1,0 +1,4 @@
+两张表基于外键的查询：
+	select s.*, t.* from student s,teacher t where s.tid=t.id;
+	select s.id sid,s.name sname,s.tid stid,t.id tid,t.name=tname from
+	student s,teacher t where s.tid=t.id;
