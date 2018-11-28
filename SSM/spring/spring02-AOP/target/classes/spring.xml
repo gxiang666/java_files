@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans 
+                           http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/aop 
+                           http://www.springframework.org/schema/aop/spring-aop.xsd">
+ 
+         
+        <bean id="userService" class="com.tnti.service.impl.UserServiceImpl"></bean>
+        
+        <bean id="myAspect1" class="com.tnti.myaspect.MyAspect01"></bean>
+        
+        <bean id="myAspect2" class="com.tnti.myaspect.MyAspect02"></bean>
+        
+        <bean id="myAspect3" class="com.tnti.myaspect.MyAspect03"></bean>
+        
+        <bean id="myAspect4" class="com.tnti.myaspect.MyAspect04"></bean>
+        
+        <bean id="myAspect5" class="com.tnti.myaspect.MyAspect05"></bean>
+        
+        <!-- 支持注解 自动代理-->
+		<aop:aspectj-autoproxy></aop:aspectj-autoproxy>        
+    
+     	<!-- 环绕通知 test用的是接口，两个都行
+		com.tnti.service.impl.*.*(..))    com.tnti.service.*.*(..))  -->
+	<!--<aop:config proxy-target-class="true">
+        	<aop:pointcut expression="execution(*  com.tnti.service.impl.*.*(..))" id="mypointcut"/>
+        	<aop:advisor advice-ref="myAspect1" pointcut-ref="mypointcut"/>
+        </aop:config>  -->
+     
+		 <!-- 前后置通知
+        <aop:config proxy-target-class="true">
+        	<aop:pointcut expression="execution(*  com.tnti.service.*.*(..))" id="mypointcut"/>
+        	<aop:advisor advice-ref="myAspect3" pointcut-ref="mypointcut"/>
+        	<aop:advisor advice-ref="myAspect4" pointcut-ref="mypointcut"/>
+        </aop:config> -->
+        
+     <!-- 自定义通知 test中用的是接口必须用com.tnti.service.*.*(..))-->   
+	<aop:config>
+		<aop:aspect ref="myAspect5">
+			<aop:pointcut expression="execution(*  com.tnti.service.*.*(..))" id="mypointcut"/>
+			<aop:before method="before" pointcut-ref="mypointcut"/>
+			<aop:after method="after" pointcut-ref="mypointcut"/>
+		</aop:aspect>	
+	</aop:config>   
+</beans>
