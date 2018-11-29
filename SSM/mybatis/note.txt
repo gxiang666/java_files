@@ -1,0 +1,118 @@
+﻿当Mapper.xml文件：
+	1.namespace为实体类时，必须手动完成方法的实现
+	Mapper.xml
+		<?xml version="1.0" encoding="UTF-8"?>
+		<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+		<!-- namespace代表映射的bean类，此处为User,不能随便写 -->
+		<mapper namespace="com.tnti.bean.UserMapper">
+			<select id="selectUsertById" resultType="com.tnti.bean.User">
+				select * from user where id = #{id}
+			</select>
+			
+			<select id="selectUserAll" resultType="com.tnti.bean.User">
+				select * from user
+			</select>
+			
+			<insert id="insertUser" parameterType="com.tnti.bean.User">
+				insert into user(id,username,sex,address) values(#{id},#{username},#{sex},#{address})
+			</insert>
+			
+			<update id="updateUser" parameterType="com.tnti.bean.User">
+				update user set username=#{username}, sex=#{sex}, address=#{address} where id = #{id}
+			</update>
+			
+			<delete id="deleteUser" parameterType="int">
+				delete from user where id = #{id}
+			</delete>
+		</mapper>
+
+	Test.java
+		package com.tnti.test;
+
+		import java.io.IOException;
+		import java.io.InputStream;
+
+		import org.apache.ibatis.io.Resources;
+		import org.apache.ibatis.session.SqlSession;
+		import org.apache.ibatis.session.SqlSessionFactory;
+		import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+
+		import com.tnti.bean.User;
+
+		public class Test {
+
+			public static void main(String[] args) throws IOException {
+				InputStream is =Resources.getResourceAsStream("mybatis.xml");
+				SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(is);
+				SqlSession sqlSession = sqlSessionFactory.openSession();
+				User user = sqlSession.selectOne("com.tnti.bean.UserMapper.selectById", 2);
+				System.out.println(user);
+				sqlSession.close();
+			}
+		}
+
+	2.namespace为dao接口时，mybatis会自动创建dao接口的实现
+	Mapper.xml
+		<?xml version="1.0" encoding="UTF-8"?>
+		<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+		<!-- namespace是要映射的dao接口，此处为com.tnti.dao.IUserDao-->
+		<mapper namespace="com.tnti.dao.IUserDao">
+			<select id="selectUsertById" resultType="com.tnti.bean.User">
+				select * from user where id = #{id}
+			</select>
+			
+			<select id="selectUserAll" resultType="com.tnti.bean.User">
+				select * from user
+			</select>
+			
+			<insert id="insertUser" parameterType="com.tnti.bean.User">
+				insert into user(id,username,sex,address) values(#{id},#{username},#{sex},#{address})
+			</insert>
+			
+			<update id="updateUser" parameterType="com.tnti.bean.User">
+				update user set username=#{username}, sex=#{sex}, address=#{address} where id = #{id}
+			</update>
+			
+			<delete id="deleteUser" parameterType="int">
+				delete from user where id = #{id}
+			</delete>
+		</mapper>
+
+	Test.java
+		package com.tnti.test;
+
+		import java.io.IOException;
+		import java.io.InputStream;
+
+		import org.apache.ibatis.io.Resources;
+		import org.apache.ibatis.session.SqlSession;
+		import org.apache.ibatis.session.SqlSessionFactory;
+		import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+
+		import com.tnti.bean.User;
+		import com.tnti.dao.IUserDao;
+
+		/**
+		 * 通过mapper代理自动生成dao接口的实例
+		 * @author Admin
+		 *
+		 */
+		public class Test {
+			public static void main(String[] args) throws IOException {
+				InputStream is = Resources.getResourceAsStream("mybatis.xml");
+				SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(is);
+				SqlSession sqlSession = sqlSessionFactory.openSession();
+				
+				//获得dao接口的实例【无需写实现类，mybatis自动创建并返回】
+				IUserDao mapper = sqlSession.getMapper(IUserDao.class);
+				User user =  mapper.selectUsertById(2);
+				sqlSession.close();
+				System.out.println(user);
+				
+			}
+		}
+
