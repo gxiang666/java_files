@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace是要映射的dao接口，此处为com.tnti.dao.IUserDao-->
+<mapper namespace="com.tnti.dao.IUserDao">
+	<select id="selectUsertById" parameterType="int" resultType="com.tnti.bean.User">
+		select * from user where id = #{id}
+	</select>
+</mapper>
