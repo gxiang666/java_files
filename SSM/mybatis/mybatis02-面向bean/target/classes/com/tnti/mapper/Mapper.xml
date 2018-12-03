@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace代表映射的类，此处为User,不能随便写 -->
+<mapper namespace="com.tnti.bean.UserMapper">
+	<select id="selectUsertById" resultType="com.tnti.bean.User">
+		select * from user where id = #{id}
+	</select>
+	
+	<select id="selectUserAll" resultType="com.tnti.bean.User">
+		select * from user
+	</select>
+	
+	<insert id="insertUser" parameterType="com.tnti.bean.User">
+		insert into user(id,username,sex,address) values(#{id},#{username},#{sex},#{address})
+	</insert>
+	
+	<update id="updateUser" parameterType="com.tnti.bean.User">
+		update user set username=#{username}, sex=#{sex}, address=#{address} where id = #{id}
+	</update>
+	
+	<delete id="deleteUser" parameterType="int">
+		delete from user where id = #{id}
+	</delete>
+</mapper>

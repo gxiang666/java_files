@@ -1,0 +1,13 @@
+spring整合mybatis:
+	1.建立maven工程
+	2.编写pom文件
+	3.创建bean,dao,mappera文件
+	4.创建配置文件spring.xml和db.properties
+		db.properties   里面是数据源信息
+		spring.xml   里面保存着spring和mybatis的配置
+			(0)	开启注解和扫描注解
+			(1) 加载数据库配置信息db.properties
+			(2) spring管理数据源配置
+			(3) spring管理sqlSessionFactory
+			(4) 对dao接口进行Mapper代理，自动生成实现类
+			(5) 配置spring AOP
