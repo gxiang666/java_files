@@ -1,0 +1,62 @@
+﻿安装Apache HTTP服务
+
+	
+1.下载并安装 Apache HTTP 服务 	 # yum -y install httpd 
+
+	2.安装 apache 的扩展文件 	 # yum -y install httpd-manual mod_ssl mod_perl mod_auth_mysql
+
+	3.启动 apache http 服务	         # service httpd start
+
+	4.设置开机自动启动apache http服务 # chkconfig httpd on
+
+
+
+下载和安装MySQL数据库
+	
+1.下载并安装 MySQL 数据库	 	# yum -y install mysql mysql-server 
+
+	2.启动 MySQL 数据库		 	# service mysqld start
+	
+3.修改 MySQL 数据库 root 用户的密码      # mysql_secure_installation
+	
+4.查看root账号下的数据库信息		# mysql -uroot -p123123
+   # show databases;
+
+	5.创建数据库 wordpress 			# create database wordpress;
+   # show databases;
+	
+6.设置开机自动启动		        # chkconfig mysqld on
+
+
+
+安装PHP语言环境
+
+	
+1.安装php以及php支持MySQL的php-mysql软件包		# yum -y install php php-mysql
+
+	2.安装 php 常用扩展包 
+		# yum -y install gd php-gd gd-devel php-xml php-common php-mbstring php-ldap php-pear php-xmlrpc php-imap
+
+	3.重启 Apache 服务					# service httpd restart
+	
+4.创建一个 php 页面，测试 PHP 环境			# echo "<?php phpinfo(); ?>" > /var/www/html/phpinfo.php
+
+安装部署WordPress
+
+
+	1.下载 WordPress安装包          # wget https://cn.wordpress.org/wordspress-4.7.4-zh_CN.tar.gz
+	2.解压安装包	       	       # tar -xzf wordpress-4.7.4-zh_CN.tar.gz
+   # ls
+	
+3.创建和修改 WordPress 配置文件 # cd wordpress
+   # cp wp-config-sample.php wp-config.php
+   # vim wp-config.php
+
+		修改配置文件的数据库信息：
+			define('DB_NAME', 'wordpress');
+			define('DB_USER', 'root');
+			define('DB_PASSWORD', '123123');
+			
+	4.创建一个 wp-blog 文件夹		# mkdir /var/www/html/wp-blog
+   
+	  将wordpress迁移到这个新建文件夹中	# mv * /var/www/html/wp-blog/

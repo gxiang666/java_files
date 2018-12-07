@@ -1,0 +1,27 @@
+下载并安装Apache：
+	yum -y install httpd
+
+添加一个Linux用户： siteadmin 并指定新增用户的远程登录默认访问路径为 /var/www/html
+	adduser -d /var/www/html siteadmin
+
+设置新建用户 siteadmin 的登录密码：
+	passwd siteadmin
+
+授予 siteadmin 用户权限：
+	chown  -Rf  siteadmin(用户).siteadmin(密码)  /var/www/html
+
+启动Apache服务：
+	service httpd start
+
+
+
+使用FileZilla上传本地站点文件：
+	输入如下信息，并点击 快速连接，连接到ECS服务器。
+
+	主机：输入本实验资源中分配的ECS Linux服务器 的 公网IP； 
+
+	用户名：输入ECS服务器中新建用户 siteadmin；
+
+	密码：输入 siteadmin 用户的自定义登录密码，例如：Zhuyun123!；
+
+	端口：输入 22 ；
