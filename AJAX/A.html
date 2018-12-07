@@ -1,37 +1,394 @@
 <!DOCTYPE html>
-<html>
-<head>
-<meta charset="utf-8">
-<script>
-function loadXMLDoc()
-{
-	var xmlhttp;
-	if (window.XMLHttpRequest)
-	{
-		//  IE7+, Firefox, Chrome, Opera, Safari 浏览器执行代码
-		xmlhttp=new XMLHttpRequest();
-	}
-	else
-	{
-		// IE6, IE5 浏览器执行代码
-		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-	}
-	xmlhttp.onreadystatechange=function()
-	{
-		if (xmlhttp.readyState==4 && xmlhttp.status==200)
-		{
-			document.getElementById("myDiv").innerHTML=xmlhttp.responseText;
-		}
-	}
-	xmlhttp.open("GET","/try/ajax/ajax_info.txt",true);
-	xmlhttp.send();
+<html lang="zh">
+<style>
+label.error {
+	line-height: 30px;
+	font-size: 14px;
+	color: red;
 }
+
+label.hint {
+	line-height: 30px;
+	font-size: 12px;
+	color: #B0B0B0;
+}
+</style>
+
+<!-- <#include "../common/head.html" />
+ -->
+
+
+<!DOCTYPE html>
+<#setting number_format="#">
+<html lang="zh">
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		<meta charset="utf-8" />
+		<title>Admin后台管理</title>
+
+		<meta name="description" content="overview &amp; stats" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+
+		<!-- bootstrap & fontawesome -->
+		<link rel="stylesheet" href="${(ctx)!''}/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="${(ctx)!''}/font-awesome/4.5.0/css/font-awesome.min.css" />
+
+		<!-- page specific plugin styles -->
+		<link rel="stylesheet" href="${(ctx)!''}/css/jquery-ui.min.css" />
+		
+		<link rel="stylesheet" href="${(ctx)!''}/css/bootstrap-datepicker3.min.css" />
+        <link rel="stylesheet" href="${(ctx)!''}/css/bootstrap-timepicker.min.css" />
+        <link rel="stylesheet" href="${(ctx)!''}/css/daterangepicker.min.css" />
+        <link rel="stylesheet" href="${(ctx)!''}/css/bootstrap-datetimepicker.min.css" />
+        
+		<!-- text fonts -->
+		<link rel="stylesheet" href="${(ctx)!''}/css/fonts.googleapis.com.css" />
+
+		<!-- ace styles -->
+		<link rel="stylesheet" href="${(ctx)!''}/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
+
+		<!--[if lte IE 9]>
+			<link rel="stylesheet" href="${(ctx)!''}/css/ace-part2.min.css" class="ace-main-stylesheet" />
+		<![endif]-->
+		<link rel="stylesheet" href="${(ctx)!''}/css/ace-skins.min.css" />
+		<link rel="stylesheet" href="${(ctx)!''}/css/ace-rtl.min.css" />
+
+		<!--[if lte IE 9]>
+		  <link rel="stylesheet" href="${(ctx)!''}/css/ace-ie.min.css" />
+		<![endif]-->
+
+		<!-- inline styles related to this page -->
+
+		<!-- ace settings handler -->
+		<script src="${(ctx)!''}/js/ace-extra.min.js"></script>
+
+		<!-- HTML5shiv and Respond.js for IE8 to support HTML5 elements and media queries -->
+
+		<!--[if lte IE 8]>
+		<script src="${(ctx)!''}/js/html5shiv.min.js"></script>
+		<script src="${(ctx)!''}/js/respond.min.js"></script>
+		<![endif]-->
+	</head>
+	
+</html>
+
+
+
+<body class="no-skin">
+
+
+
+	<!-- <#include "../common/navbar.html" /> -->
+	<div id="navbar" class="navbar navbar-default          ace-save-state">
+	<div class="navbar-container ace-save-state" id="navbar-container">
+		<div class="navbar-header pull-left">
+			<a href="index.html" class="navbar-brand">
+				<small>
+					<i class="fa fa-leaf"></i>
+					Admin管理后台
+				</small>
+			</a>
+		</div>
+
+		<div class="navbar-buttons navbar-header pull-right" role="navigation">
+			<ul class="nav ace-nav">
+				<li class="light-blue dropdown-modal">
+					<a data-toggle="dropdown" href="#" class="dropdown-toggle">
+						<img class="nav-user-photo" src="${(ctx)!''}/images/avatars/user.jpg" alt="Jason's Photo" />
+						<span class="user-info">
+							<small>Welcome,</small>
+							${(username)!''}
+						</span>
+
+						<i class="ace-icon fa fa-caret-down"></i>
+					</a>
+
+					<ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
+						<li>
+							<a href="${(ctx)!''}/logout">
+								<i class="ace-icon fa fa-power-off"></i>
+								Logout
+							</a>
+						</li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+	</div><!-- /.navbar-container -->
+</div>
+
+
+
+
+	<div class="main-container ace-save-state" id="main-container">
+		<script type="text/javascript">
+                try{ace.settings.loadState('main-container')}catch(e){}
+            </script>
+
+		<#include "../common/sidebar.html" />
+
+		<div class="main-content">
+			<div class="main-content-inner">
+				<div class="breadcrumbs ace-save-state" id="breadcrumbs">
+					<ul class="breadcrumb">
+						<li><i class="ace-icon fa fa-home home-icon"></i> <a href="#">Home</a>
+						</li>
+						<li class="active">用户管理</li>
+					</ul>
+				</div>
+
+				<div class="page-content">
+					<div class="page-header">
+						<h1>
+							用户管理 <small> <i class="ace-icon fa fa-angle-double-right"></i>
+								overview
+							</small> <label style="float: right;">
+								<button class="btn btn-white btn-info btn-bold" id="addBtn">
+									<i class="ace-icon fa fa-floppy-o bigger-120 blue"></i>添加
+								</button>
+							</label>
+						</h1>
+
+					</div>
+					<!-- /.page-header -->
+					<div class="page-header">
+						<form action="${(ctx)!''}/user/list" method="post" id="queryForm"
+							name="queryForm" style="width: 80%;">
+							<label>姓名：</label> <input type="text" name="name"
+								value="${(user.name)!''}" /> <input type="hidden"
+								name="pageIndex" id="pageIndex" value="${(page.pageIndex)!'1'}" />
+							<input type="hidden" name="pageSize" id="pageSize" value="10" />
+							<button id="queryBtn" class="btn btn-white btn-primary btn-bold"
+								style="margin-left: 20px;">
+								<i class="ace-icon fa fa-search bigger-120 blue"></i>查询
+							</button>
+						</form>
+					</div>
+					<div class="row">
+						<div class="col-xs-12">
+							<table id="simple-table"
+								class="table  table-bordered table-hover">
+								<thead>
+									<tr>
+										<th>ID</th>
+										<th>姓名</th>
+										<th>密码</th>
+										<th>年龄</th>
+										<th></th>
+									</tr>
+								</thead>
+								<tbody>
+									<#if (userList??)&&(userList?size>0)> <#list userList as
+										_data>
+									<tr id="tr_${(_data.id)?c}">
+										<td>${(_data.id)?c}</td>
+										<td>${(_data.name)!''}</td>
+										<td>${(_data.password)!''}</td>
+										<td>${(_data.age)?c}</td>
+										<td>
+											<button class="btn btn-white btn-info btn-bold"
+												onclick="update(${(_data.id)?c})">
+												<i class="ace-icon fa fa-pencil-square-o bigger-120 blue"></i>修改
+											</button>
+											<button class="btn btn-white btn-warning btn-bold"
+												onclick="deleteUser(${(_data.id)?c})">
+												<i class="ace-icon fa fa-trash-o bigger-120 orange"></i>删除
+											</button>
+										</td>
+									</tr>
+									</#list> </#if>
+								</tbody>
+							</table>
+						</div>
+						<#include "../common/pagination.html" />
+					</div>
+					<!-- /.row -->
+				</div>
+				<!-- /.page-content -->
+			</div>
+		</div>
+		<!-- /.main-content -->
+
+		<!-- <#include "../common/footer.html" /> -->
+	
+
+	</div>
+	<!-- /.main-container -->
+
+	<div id="dialog-add" class="hide">
+		<form action="${(ctx)!''}/user/addOrUpdate" method="post" id="addForm">
+			<input type="hidden" name="id" id="add_id" />
+			<p>
+				<label>姓名：</label><input type="text" name="name" style="width: 70%;"
+					id="add_name" />
+			</p>
+			<p>
+				<label>密码：</label><input type="text" name="password"
+					style="width: 70%;" id="add_password" />
+			</p>
+			<p>
+				<label>年龄：</label><input type="text" name="age" style="width: 70%;"
+					id="add_age" />
+			</p>
+		</form>
+	</div>
+	<!-- <#include "../common/script.html" /> -->
+
+
+
+	<!-- basic scripts -->
+
+<!--[if !IE]> -->
+<script src="${(ctx)!''}/js/jquery-2.1.4.min.js"></script>
+
+<!-- <![endif]-->
+
+<!--[if IE]>
+<script src="${(ctx)!''}/js/jquery-1.11.3.min.js"></script>
+<![endif]-->
+<script type="text/javascript">
+	if('ontouchstart' in document.documentElement) document.write("<script src='${(ctx)!''}/js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
 </script>
-</head>
-<body>
+<script src="${(ctx)!''}/js/bootstrap.min.js"></script>
 
-<div id="myDiv"><h2>使用 AJAX 修改该文本内容</h2></div>
-<button type="button" onclick="loadXMLDoc()">修改内容</button>
+<!-- page specific plugin scripts -->
 
+<!--[if lte IE 8]>
+  <script src="${(ctx)!''}/js/excanvas.min.js"></script>
+<![endif]-->
+<script src="${(ctx)!''}/js/jquery-ui.min.js"></script>
+<script src="${(ctx)!''}/js/jquery-ui.custom.min.js"></script>
+<script src="${(ctx)!''}/js/jquery.ui.touch-punch.min.js"></script>
+<script src="${(ctx)!''}/js/bootbox.js"></script>
+
+<script src="${(ctx)!''}/js/bootstrap-datepicker.min.js"></script>
+<script src="${(ctx)!''}/js/bootstrap-timepicker.min.js"></script>
+<script src="${(ctx)!''}/js/moment.min.js"></script>
+<script src="${(ctx)!''}/js/bootstrap-datetimepicker.min.js"></script>
+        
+<script src="${(ctx)!''}/js/jquery.easypiechart.min.js"></script>
+<script src="${(ctx)!''}/js/jquery.sparkline.index.min.js"></script>
+<script src="${(ctx)!''}/js/jquery.flot.min.js"></script>
+<script src="${(ctx)!''}/js/jquery.flot.pie.min.js"></script>
+<script src="${(ctx)!''}/js/jquery.flot.resize.min.js"></script>
+
+<!-- ace scripts -->
+<script src="${(ctx)!''}/js/ace-elements.min.js"></script>
+<script src="${(ctx)!''}/js/ace.min.js"></script>
+<script src="${(ctx)!''}/js/pagetoolbar.js"></script>
+
+<script type="text/javascript" src="${(ctx)!''}/js/jquery.validate.min.js"></script>
+
+
+
+	<script type="text/javascript">
+            jQuery(function($) {
+                $(".nav-list").children("li").attr("class","");
+                $(".nav-list").children("li").eq(0).attr("class","active");
+                
+                $("#queryBtn").bind("click",function(){
+                    $("#pageIndex").val(1);
+                    $("#queryForm").submit();
+                });
+                
+                $.widget("ui.dialog", $.extend({}, $.ui.dialog.prototype, {
+                    _title: function(title) {
+                        var $title = this.options.title || '&nbsp;'
+                        if( ("title_html" in this.options) && this.options.title_html == true )
+                            title.html($title);
+                        else title.text($title);
+                    }
+                }));
+                $( "#addBtn" ).on('click', function(e) {
+                    e.preventDefault();
+                    $("#add_id").val("");
+                    createDialog("添加用户")
+                });
+                
+                $("#addForm").validate({
+                    onkeyup:null,
+                    rules:{
+                    	name:{
+                            required:true
+                        },
+                        password:{
+                            required:true
+                        },
+                        age:{
+                            required:true,
+                            digits:true
+                        }
+                    },
+                    messages:{
+                    	name:{
+                            required:"请输入姓名"
+                        },
+                        password:{
+                        	 required:"请输入密码"
+                        },
+                        age:{
+                            required:"请输入年龄",
+                            digits:"年龄必须是整数"
+                        }
+                    }
+                });
+            })
+            function update(id){
+            	$("#add_id").val(id);
+            	$("#add_name").val($.trim($("#tr_"+id).children("td").eq(1).text()));
+            	$("#add_password").val($.trim($("#tr_"+id).children("td").eq(2).text()));
+            	$("#add_age").val($.trim($("#tr_"+id).children("td").eq(3).text()));
+            	createDialog("修改用户");
+            }
+            //创建添加修改dialog
+            function createDialog(title){
+                var dialog = $( "#dialog-add" ).removeClass('hide').dialog({
+                    modal: true,
+                    width:400,
+                    height:300,
+                    title: "<div class='widget-header widget-header-small'><h4 class='smaller'><i class='ace-icon fa fa-check'></i> "+title+"</h4></div>",
+                    title_html: true,
+                    buttons: [ 
+                        {
+                            text: "Cancel",
+                            "class" : "btn btn-minier",
+                            click: function() {
+                                $( this ).dialog( "close" ); 
+                                resetAddForm();
+                            } 
+                        },
+                        {
+                            text: "OK",
+                            "class" : "btn btn-primary btn-minier",
+                            click: function() {
+                                 $("#addForm").submit();
+                            } 
+                        }
+                    ]
+                });
+            }
+            function resetAddForm(){
+                $("input[id^='add_']").val("");
+            }
+            function deleteUser(id){
+                var r=confirm("确认删除？");
+                if (r==true){
+                	$.ajax({
+                      type: "POST",
+                      url: "${(ctx)!''}/user/delete",
+                      data: {"id":id},
+                      cache:false,
+                      success: function(msg){
+                          if(msg == "success"){
+                               alert("删除成功！");
+                               window.location.reload();
+                          }else{
+                               alert("删除失败！");
+                          }
+                      }
+                   });
+                }
+            }
+        </script>
 </body>
 </html>
