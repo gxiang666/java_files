@@ -1,0 +1,28 @@
+server:
+  port: 9090
+  context-path: /ssm
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:mysql://192.168.18.106:3306/demo?characterEncoding=UTF-8&useUnicode=true
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.jdbc.Driver
+    initialSize: 10
+    minIdle: 20
+    maxActive: 100
+    maxWait: 60000  
+    timeBetweenEvictionRunsMillis: 60000  
+    minEvictableIdleTimeMillis: 300000  
+    validationQuery: select 1 
+    testWhileIdle: true  
+    testOnBorrow: false  
+    testOnReturn: false 
+    filters: stat,wall,log4j
+    logSlowSql: true
+  freemarker:
+    suffix: .html
+    template-loader-path: classpath:/templates/
+mybatis:
+  mapper-locations: classpath:mapping/*.xml
+  type-aliases-package: com.demos.model

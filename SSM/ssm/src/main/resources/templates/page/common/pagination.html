@@ -1,0 +1,43 @@
+<div>
+	<ul class="pagination">
+	 	<#if page.firstPage>
+              	<li><a href="javascript:startPage('queryForm');">	<i class="ace-icon fa fa-angle-double-left"></i></a></li>
+              <#else>
+               	<li class="disabled"><a href="javascript:void(0);">	<i class="ace-icon fa fa-angle-double-left"></i></a></li>
+              </#if>
+		
+		<#if (page.pageIndex >= page.pageCount) && (page.pageCount != 0)>
+			<#assign index = page.pageCount />
+		<#else>
+			<#assign index = page.pageIndex />
+		</#if>
+		<#assign _start=1 />
+             	<#if (index>3)>
+              	<#assign _start=index-2 />
+             	</#if>
+             	<#assign _end=1 />
+             	<#if (page.pageCount-index>=2)>
+               	<#assign _end=index+2 />
+              <#else>
+                 	<#assign _end=page.pageCount />
+             	</#if>
+             	<#if (_end < 1)>
+             		<#assign _end=1 />
+             	</#if>
+		<#list _start.._end as t>
+              	<#if t==index>
+               		<li class="active"><a href="javascript:void(0);">${t}</a></li>
+               	<#else>
+                		<li><a href="javascript:toPage('queryForm','${t}');">${t}</a></li>
+               	</#if>
+              </#list>
+		<#if page.lastPage>
+              	<li><a href="javascript:endPage('queryForm','${page.pageCount}');"><i class="ace-icon fa fa-angle-double-right"></i></a></li>
+              <#else>
+               <li class="disabled"><a href="javascript:void(0);"><i class="ace-icon fa fa-angle-double-right"></i></a></li>
+              </#if>
+		<li class="disabled">
+               	<a href="javascript:void(0);">共${page.pageCount}页${page.totalCount}条</a>
+          	</li>
+	</ul>
+</div>

@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="zh">
+<style>
+label.error{
+    line-height: 30px;
+    font-size: 14px;
+    color: red;
+}
+label.hint{
+    line-height: 30px;
+    font-size: 12px;
+    color: #B0B0B0;
+}
+</style>
+    <#include "../common/head.html" />  
+    <body class="no-skin">
+        <#include "../common/navbar.html" />  
+        <div class="main-container ace-save-state" id="main-container">
+            <script type="text/javascript">
+                try{ace.settings.loadState('main-container')}catch(e){}
+            </script>
+
+            <#include "../common/sidebar.html" />  
+
+            <div class="main-content">
+                <div class="main-content-inner">
+                    <div class="breadcrumbs ace-save-state" id="breadcrumbs">
+                        <ul class="breadcrumb">
+                            <li>
+                                <i class="ace-icon fa fa-home home-icon"></i>
+                                <a href="#">Home</a>
+                            </li>
+                            <li class="active">用户管理</li>
+                        </ul>
+                    </div>
+
+                    <div class="page-content">
+                        <div class="page-header">
+                            <h1>用户管理
+                                <small>
+                                    <i class="ace-icon fa fa-angle-double-right"></i>
+                                    overview
+                                </small>
+                                <label style="float: right;">
+                                    <button class="btn btn-white btn-info btn-bold" id="addBtn">
+                                        <i class="ace-icon fa fa-floppy-o bigger-120 blue"></i>添加
+                                    </button>
+                                </label>
+                            </h1>
+                            
+                        </div><!-- /.page-header -->
+                        <div class="page-header">
+                            <form action="${(ctx)!''}/user/list" method="post" id="queryForm" name="queryForm" style="width: 80%;">
+                                <label>姓名：</label> <input type="text" name="name"  value="${(user.name)!''}"/>
+                                <input type="hidden" name="pageIndex" id="pageIndex" value="${(page.pageIndex)!'1'}"/>
+                                <input type="hidden" name="pageSize" id="pageSize" value="10"/>
+                                <button id="queryBtn" class="btn btn-white btn-primary btn-bold" style="margin-left: 20px;">
+                                    <i class="ace-icon fa fa-search bigger-120 blue"></i>查询
+                                </button>
+                            </form>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <table id="simple-table" class="table  table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>姓名</th>
+                                            <th>密码</th>
+                                            <th>年龄</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <#if (userList??)&&(userList?size>0)>
+                                            <#list userList as _data>
+                                                <tr id="tr_${(_data.id)?c}">
+                                                    <td>${(_data.id)?c}</td>
+                                                    <td>${(_data.name)!''}</td>
+                                                    <td>${(_data.password)!''}</td>
+                                                    <td>${(_data.age)?c}</td>
+                                                    <td>
+                                                        <button class="btn btn-white btn-info btn-bold" onclick="update(${(_data.id)?c})">
+					                                        <i class="ace-icon fa fa-pencil-square-o bigger-120 blue"></i>修改
+					                                    </button>
+					                                    <button class="btn btn-white btn-warning btn-bold" onclick="deleteUser(${(_data.id)?c})">
+					                                        <i class="ace-icon fa fa-trash-o bigger-120 orange"></i>删除
+					                                    </button>
+                                                    </td>
+                                                </tr>
+                                            </#list>
+                                        </#if>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <#include "../common/pagination.html" />  
+                        </div><!-- /.row -->
+                    </div><!-- /.page-content -->
+                </div>
+            </div><!-- /.main-content -->
+
+            <#include "../common/footer.html" />  
+        </div><!-- /.main-container -->
+
+        <div id="dialog-add" class="hide">
+            <form action="${(ctx)!''}/user/addOrUpdate" method="post" id="addForm">
+                <input type="hidden" name="id" id="add_id"/>
+                <p>
+                    <label>姓名：</label><input type="text" name="name" style="width: 70%;" id="add_name"/>
+                </p>
+                <p>
+                    <label>密码：</label><input type="text" name="password" style="width: 70%;" id="add_password"/>
+                </p>
+                <p>
+                    <label>年龄：</label><input type="text" name="age" style="width: 70%;" id="add_age"/>
+                </p>
+            </form>
+        </div>
+        <#include "../common/script.html" />  
+
+        <script type="text/javascript">
+            jQuery(function($) {
+                $(".nav-list").children("li").attr("class","");
+                $(".nav-list").children("li").eq(0).attr("class","active");
+                
+                $("#queryBtn").bind("click",function(){
+                    $("#pageIndex").val(1);
+                    $("#queryForm").submit();
+                });
+                
+                $.widget("ui.dialog", $.extend({}, $.ui.dialog.prototype, {
+                    _title: function(title) {
+                        var $title = this.options.title || '&nbsp;'
+                        if( ("title_html" in this.options) && this.options.title_html == true )
+                            title.html($title);
+                        else title.text($title);
+                    }
+                }));
+                $( "#addBtn" ).on('click', function(e) {
+                    e.preventDefault();
+                    $("#add_id").val("");
+                    createDialog("添加用户")
+                });
+                
+                $("#addForm").validate({
+                    onkeyup:null,
+                    rules:{
+                    	name:{
+                            required:true
+                        },
+                        password:{
+                            required:true
+                        },
+                        age:{
+                            required:true,
+                            digits:true
+                        }
+                    },
+                    messages:{
+                    	name:{
+                            required:"请输入姓名"
+                        },
+                        password:{
+                        	 required:"请输入密码"
+                        },
+                        age:{
+                            required:"请输入年龄",
+                            digits:"年龄必须是整数"
+                        }
+                    }
+                });
+            })
+            function update(id){
+            	$("#add_id").val(id);
+            	$("#add_name").val($.trim($("#tr_"+id).children("td").eq(1).text()));
+            	$("#add_password").val($.trim($("#tr_"+id).children("td").eq(2).text()));
+            	$("#add_age").val($.trim($("#tr_"+id).children("td").eq(3).text()));
+            	createDialog("修改用户");
+            }
+            //创建添加修改dialog
+            function createDialog(title){
+                var dialog = $( "#dialog-add" ).removeClass('hide').dialog({
+                    modal: true,
+                    width:400,
+                    height:300,
+                    title: "<div class='widget-header widget-header-small'><h4 class='smaller'><i class='ace-icon fa fa-check'></i> "+title+"</h4></div>",
+                    title_html: true,
+                    buttons: [ 
+                        {
+                            text: "Cancel",
+                            "class" : "btn btn-minier",
+                            click: function() {
+                                $( this ).dialog( "close" ); 
+                                resetAddForm();
+                            } 
+                        },
+                        {
+                            text: "OK",
+                            "class" : "btn btn-primary btn-minier",
+                            click: function() {
+                                 $("#addForm").submit();
+                            } 
+                        }
+                    ]
+                });
+            }
+            function resetAddForm(){
+                $("input[id^='add_']").val("");
+            }
+            function deleteUser(id){
+                var r=confirm("确认删除？");
+                if (r==true){
+                	$.ajax({
+                      type: "POST",
+                      url: "${(ctx)!''}/user/delete",
+                      data: {"id":id},
+                      cache:false,
+                      success: function(msg){
+                          if(msg == "success"){
+                               alert("删除成功！");
+                               window.location.reload();
+                          }else{
+                               alert("删除失败！");
+                          }
+                      }
+                   });
+                }
+            }
+        </script>
+    </body>
+</html>
