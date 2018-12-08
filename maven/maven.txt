@@ -27,6 +27,13 @@
           <scope>provided</scope>
         </dependency>
       </dependencies>
+   就加入jsp-api依赖：
+     <dependency>
+	  <groupId>javax.servlet.jsp</groupId>
+	  <artifactId>javax.servlet.jsp-api</artifactId>
+	  <version>2.3.1</version>
+	  <scope>provided</scope>
+     </dependency>
 
 排除依赖：
     <dependency>
@@ -98,9 +105,11 @@
     <pluginManagement>
       <!-- 配置构建过程中需要使用的插件 -->
       <plugins>
+	<!-- java的编译器插件 -->
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-compiler-plugin</artifactId>
+	  <!-- 针对插件的做的配置 -->
           <configuration>
             <defaultLibBundleDir>lib</defaultLibBundleDir>
             <source>1.8</source>

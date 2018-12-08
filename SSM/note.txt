@@ -1,0 +1,46 @@
+SSM笔记：
+	实现AJAX请求的controller返回json的两种方法：
+	@ResponseBody
+	@RequestMapping("AjaxQueryDemoAction")
+	public List<AdminInfoBean> ajaxQueryDemo(AdminInfoBean adminB) {
+		// 调用service层进行查询操作
+		List<AdminInfoBean> lstAdmins = loginS.queryInfoByParams(adminB);
+		// 直接返回查询结果集即可，springmvc框架自动将结果集转换为json字符串返回给客户端
+		return lstAdmins;
+	}
+
+	@RequestMapping("AjaxQueryDemoAction2")
+	public ResponseEntity<List<AdminInfoBean>> ajaxQueryDemo2(AdminInfoBean adminB) {
+		//ResponseEntity<List<AdminInfoBean>> re = new ResponseEntity<List<AdminInfoBean>>(null);
+		// 调用service层进行查询操作
+		List<AdminInfoBean> lstAdmins = loginS.queryInfoByParams(adminB);
+		// 直接返回查询结果集即可，springmvc框架自动将结果集转换为json字符串返回给客户端
+		return ResponseEntity.status(HttpStatus.OK).body(lstAdmins);
+	}
+
+
+	RESTFUL风格
+	@RequestMapping(value = "/adminInfo/{adminId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<AdminInfoBean>> restQueryAdminInfo_GetId(@PathVariable("adminId") Integer adminId) {
+		// ResponseEntity<List<AdminInfoBean>> re = new
+		// ResponseEntity<List<AdminInfoBean>>(null);
+		// 调用service层进行查询操作
+		List<AdminInfoBean> lstAdmins = loginS.selectByPrimaryKeyList(adminId);
+
+		// 直接返回查询结果集即可，springmvc框架自动将结果集转换为json字符串返回给客户端
+		return ResponseEntity.status(HttpStatus.OK).body(lstAdmins);
+	}
+
+	@RequestMapping(value = "/adminInfo/", method = RequestMethod.GET)
+	public ResponseEntity<List<AdminInfoBean>> restQueryAdminInfo_GetAll() {
+		// ResponseEntity<List<AdminInfoBean>> re = new
+		// ResponseEntity<List<AdminInfoBean>>(null);
+		// 调用service层进行查询操作
+		List<AdminInfoBean> lstAdmins = loginS.selectAllInfos();
+		// 直接返回查询结果集即可，springmvc框架自动将结果集转换为json字符串返回给客户端
+		return new ResponseEntity<>(lstAdmins, HttpStatus.OK);
+		// <> 语法用法，要求maven编译器使用的版本>=1.7，可以在项目右键--> project facets 修改java的版本
+		// 也可以使用1.5的版本语法方式
+		// return new ResponseEntity<List<AdminInfoBean>>(lstAdmins, HttpStatus.OK);
+
+	}
