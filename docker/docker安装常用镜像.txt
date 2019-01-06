@@ -1,0 +1,14 @@
+安装tomcat:
+	搜索tomcat:
+		docker search tomcat
+	下载tomcat
+		docker pull tomcat
+	启动tomcat
+		docker run --name mytomcat -p 8080:8080 -it tomcat	#以交互式启动
+		docker run --name mytomcat -p 8080:8080 -it tomcat	#后台启动
+	从新进入tomcat:
+		docker attach mytomcat		#进入tomcat原本的窗口，无法对tomcat操作
+		docker exec -it mytomcat /bin/bash	#以一个新的终端进入tomcat，可以对其进行操作
+
+安装Elasticsearch:
+	docker run -e ES_JAVA_OPTS="-Xms256m -Xmx256m" -d -p 9200:9200 -p 9300:9300 --name ES  5acf0e8da90b
