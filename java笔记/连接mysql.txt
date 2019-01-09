@@ -1,0 +1,6 @@
+使用Navicat连接阿里云ECS服务器上的MySQL数据库;
+    mysql授权:
+	mysql>GRANT ALL PRIVILEGES ON *.* TO 'user'@'%' IDENTIFIED BY 'password' WITH GRANT OPTION;
+	mysql>FLUSH PRIVILEGES;
+    navicat连接云数据库：
+	通过ssh连接，用户和密码用服务器的

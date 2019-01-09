@@ -1,0 +1,4 @@
+@ConfigurationProperties:把properties配置文件映射到指定的类上,只能映射全局配置文件
+@Configuration：表明这是一个配置类
+@ImportResource:在主程序上导入指定的spring配置文件
+@PropertiesResource:把properties配置文件映射到指定的类上,可以映射指定位置的配置文件

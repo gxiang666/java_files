@@ -1,0 +1,31 @@
+通过在变量名后面跟着一个 !(叹号，译者注)和默认值
+${(page.pageIndex)!'1'} ：page.pageIndex的默认值为1，！表示默认值，如果pageIndex有值则为其值
+
+通过放置 ?? 来询问一个变量是否存在
+<#if user??><h1>Welcome ${user}!</h1></#if>
+
+取得list的长度：${fields?size}
+判断list的长度：<#if fields?size>0 ></#if>
+遍历list:<#list userList as data>
+c函数是将数字转换成字符串:${x?c}
+
+<#if (userList??)&&(userList?size>0)> 
+<#list userList as data>
+<tr id="tr_${(_data.id)?c}">
+	<td>${(_data.id)?c}</td>
+	<td>${(_data.name)!''}</td>
+	<td>${(_data.password)!''}</td>
+	<td>${(_data.age)?c}</td>
+	<td>
+		<button class="btn btn-white btn-info btn-bold"
+			onclick="update(${(_data.id)?c})">
+			<i class="ace-icon fa fa-pencil-square-o bigger-120 blue"></i>修改
+		</button>
+		<button class="btn btn-white btn-warning btn-bold"
+			onclick="deleteUser(${(_data.id)?c})">
+			<i class="ace-icon fa fa-trash-o bigger-120 orange"></i>删除
+		</button>
+	</td>
+</tr>
+</#list>
+</#if>

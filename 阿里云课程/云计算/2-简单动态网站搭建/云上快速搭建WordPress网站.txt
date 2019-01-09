@@ -1,0 +1,35 @@
+**实验脚本**
+第2章 第2小节 安装Apache HTTP服务
+－－－－－－－－－－－－－－－－－－－－－－－－－－
+2. # yum -y install httpd 
+3. # yum -y install httpd-manual mod_ssl mod_perl mod_auth_mysql
+4. # service httpd start
+5. # chkconfig httpd on
+
+第2章 第3小节 下载和安装MySQL数据库
+－－－－－－－－－－－－－－－－－－－－－－－－－－
+1. # yum -y install mysql mysql-server 
+2. # service mysqld start
+3. # mysql_secure_installation
+4. # mysql -uroot -p123123
+   # show databases;
+5. # create database wordpress;
+   # show databases;
+6. # chkconfig mysqld on
+
+第2章 第4小节 安装PHP语言环境
+－－－－－－－－－－－－－－－－－－－－－－－－－－
+1. # yum -y install php php-mysql
+2. # yum -y install gd php-gd gd-devel php-xml php-common php-mbstring php-ldap php-pear php-xmlrpc php-imap
+3. # service httpd restart
+4. # echo "<?php phpinfo(); ?>" > /var/www/html/phpinfo.php
+
+第2章 第5小节 安装部署WordPress
+－－－－－－－－－－－－－－－－－－－－－－－－－－
+2. # tar -xzf wordpress-4.7.4-zh_CN.tar.gz
+   # ls
+3. # cd wordpress
+   # cp wp-config-sample.php wp-config.php
+   # vim wp-config.php
+4. # mkdir /var/www/html/wp-blog
+   # mv * /var/www/html/wp-blog/
