@@ -10,6 +10,7 @@ create table category(
 	id int primary key auto_increment,
 	title varchar(100),
 	created_at timestamp
+)
 
 create table post(
 	id int primary key auto_increment,

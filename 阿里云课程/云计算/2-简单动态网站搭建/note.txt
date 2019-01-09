@@ -1,4 +1,24 @@
-﻿安装Apache HTTP服务
+﻿centos的命令替换：旧     新
+	service mysqld start    	/bin/systemctl start httpd.service
+	chkconfig mysqld on
+
+		systemctl enable httpd.service
+
+
+	systemctl restart httpd #重启
+	systemctl start httpd #启动
+	systemctl stop httpd #停止
+	systemctl enable httpd #加入开机启动
+	systemctl disable httpd #从开机启动中删除
+	systemctl status httpd #查看服务状态
+	systemctl list-unit-files #查看所有已安装服务
+
+
+	
+
+	
+
+安装Apache HTTP服务
 
 	
 1.下载并安装 Apache HTTP 服务 	 # yum -y install httpd 
@@ -14,7 +34,7 @@
 下载和安装MySQL数据库
 	
 1.下载并安装 MySQL 数据库	 	# yum -y install mysql mysql-server 
-
+ 
 	2.启动 MySQL 数据库		 	# service mysqld start
 	
 3.修改 MySQL 数据库 root 用户的密码      # mysql_secure_installation
