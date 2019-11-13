@@ -1,9 +1,9 @@
-¹È¸è·şÎñÖúÊÖ ¹È¸è·ÃÎÊÖúÊÖ ¹È¸èÉÏÍøÖúÊÖ puffin
+è°·æ­ŒæœåŠ¡åŠ©æ‰‹ è°·æ­Œè®¿é—®åŠ©æ‰‹ è°·æ­Œä¸Šç½‘åŠ©æ‰‹ puffin
 
-²¹¶¡ÏÂÔØµØÖ·£º
+è¡¥ä¸ä¸‹è½½åœ°å€ï¼š
 	https://github.com/shadowsocks/shadowsocks-windows
 
-Ãâ·ÑÉÏÍøÕËºÅµØÖ·£º
+å…è´¹ä¸Šç½‘è´¦å·åœ°å€ï¼š
 	https://free-ss.site/
 	https://www.ssrtool.com/tool/free_ssr
 	https://shadowsocks-share.herokuapp.com/
@@ -11,11 +11,12 @@
 	http://www.softpen.net/#Portfolio
 	https://doub.io/sszhfx/
 
-ÊÖ»úAPPÏÂÔØ£º	
+æ‰‹æœºAPPä¸‹è½½ï¼š	
 	http://hx.vpnbb.com
 
-Èí¼şÏÂÔØµØÖ·£º
+è½¯ä»¶ä¸‹è½½åœ°å€ï¼š
 	https://github.com/shadowsocks/shadowsocks-windows/releases
-
+	- Shadowsocks-4.1.8.0.zip
+	- Source code(zip)
 
 
