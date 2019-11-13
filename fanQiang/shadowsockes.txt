@@ -19,4 +19,6 @@
 	- Shadowsocks-4.1.8.0.zip
 	- Source code(zip)
 
+	https://github.com/shadowsocksrr/shadowsocksr-csharp/releases
+	- ShadowsocksR-win-4.9.2.zip
 
