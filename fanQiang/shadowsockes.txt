@@ -5,6 +5,8 @@
 
 免费上网账号地址：
 	https://free-ss.site/
+	       C:\Windows\System32\drivers\etc
+               104.18.18.18  free-ss.site
 	https://www.ssrtool.com/tool/free_ssr
 	https://shadowsocks-share.herokuapp.com/
 	https://www.wuwweb.com/
